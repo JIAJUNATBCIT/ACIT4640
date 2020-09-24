@@ -5,16 +5,6 @@ sudo useradd todoapp
 sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 #Add todoapp user to sudoers group
 sudo usermod -aG wheel todoapp
-sudo dnf install -y -b git
-# If the project folder already exists, DELETE it
-if [ -d "ACIT4640-todo-app" ]; then sudo rm -Rf ACIT4640-todo-app; fi
-# clone project from git
-sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git
-# navigate to the project folder
-cd ACIT4640-todo-app
-# install project packages
-sudo dnf install -y -b nodejs
-sudo npm install
 # install Mongodb
 sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/mongodb-org-4.4.repo -o /etc/yum.repos.d/mongodb-org-4.4.repo
 sudo dnf search mongodb
@@ -29,6 +19,17 @@ db.createCollection("acit4640")
 exit
 # Reconfig MongoDB path
 sudo sh -c 'echo "module.exports = {localUrl: \"mongodb://localhost/acit4640\"};" > ./config/database.js'
+#Install Git
+sudo dnf install -y -b git
+# If the project folder already exists, DELETE it
+if [ -d "ACIT4640-todo-app" ]; then sudo rm -Rf ACIT4640-todo-app; fi
+# clone project from git
+sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git
+# navigate to the project folder
+cd ACIT4640-todo-app
+# install project packages
+sudo dnf install -y -b nodejs
+sudo npm install
 # install nginx
 sudo dnf install -y epel-release
 sudo dnf install -y nginx
