@@ -21,10 +21,7 @@ sudo dnf install -y -b mongodb-org
 sudo systemctl enable mongod
 sudo systemctl start mongod
 # create mongodb instance
-mongo
-use redirect
-db.createCollection("acit4640")
-exit
+mongo --eval "db.createCollection('acit4640')"
 # Reconfig MongoDB path
 sudo sh -c 'echo "module.exports = {localUrl: \"mongodb://localhost/acit4640\"};" > ./config/database.js'
 #Install Git
