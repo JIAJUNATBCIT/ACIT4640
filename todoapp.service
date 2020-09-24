@@ -7,7 +7,6 @@ Requires=mongod.service
 Environment=NODE_PORT=8080
 WorkingDirectory=/home/todoapp/ACIT4640-todo-app
 Type=simple
-User=todoapp
 ExecStartPre=/bin/sleep 5
 ExecStart=node /home/todoapp/ACIT4640-todo-app/server.js
 Restart=always
