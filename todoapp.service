@@ -9,7 +9,7 @@ WorkingDirectory=/home/todoapp/ACIT4640-todo-app
 Type=simple
 User=todoapp
 ExecStartPre=/bin/sleep 5
-ExecStart=/usr/bin/node /home/todoapp/ACIT4640-todo-app/server.js
+ExecStart=/bin/node /home/todoapp/ACIT4640-todo-app/server.js
 Restart=always
 
 [Install]
