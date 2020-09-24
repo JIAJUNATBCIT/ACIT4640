@@ -1,38 +1,22 @@
 #!/bin/bash -x
-WORKING_DIR = 'ACIT4640-todo-app'
-GIT_PROJECT_REPO = 'https://github.com/timoguic/ACIT4640-todo-app.git'
-GIT_MONGODB_REPO = 'https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/mongodb-org-4.4.repo'
-GIT_DEAMON_CONF = 'https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/todoapp.service'
-GIT_NGNIX_CONF = 'https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/nginx.conf'
-LOCAL_MONGODB_REPO = '/etc/yum.repos.d/mongodb-org-4.4.repo'
-LOCAL_DEAMON_CONF = '/etc/systemd/system/todoapp.service'
-LOCAL_NGINX_CONF = '/etc/nginx/nginx.conf'
-
-#ssh to the target machine and start from the home folder
-ssh todoapp
-# login as ROOT user [ROOT]
-sudo -i
 #add todoapp user
-useradd todoapp
+sudo useradd todoapp
 #set password to todoapp user
-echo P@ssw0rd | passwd todoapp --stdin
+sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 #Add todoapp user to sudoers group
-usermod -aG wheel todoapp
-#Login as todoapp user and install git [TODOAPP]
-su todoapp
-cd ~
+sudo usermod -aG wheel todoapp
 sudo dnf install -y git
 # If the project folder already exists, DELETE it
-if [ -d "$WORKING_DIR" ]; then sudo rm -Rf $WORKING_DIR; fi
+if [ -d "ACIT4640-todo-app" ]; then sudo rm -Rf ACIT4640-todo-app; fi
 # clone project from git
-sudo git clone $GIT_PROJECT_REPO
+sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git
 # navigate to the project folder
-cd $WORKING_DIR
+cd ACIT4640-todo-app
 # install project packages
 sudo dnf install -y nodejs
 sudo npm install
 # install Mongodb
-sudo curl $GIT_MONGODB_REPO -o $LOCAL_MONGODB_REPO
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/mongodb-org-4.4.repo -o /etc/yum.repos.d/mongodb-org-4.4.repo
 sudo dnf install -y mongodb-org
 # start mongodb
 sudo systemctl enable mongod
@@ -48,7 +32,7 @@ sudo sh -c 'echo "module.exports = {localUrl: \"mongodb://localhost/acit4640\"};
 sudo dnf install -y epel-release
 sudo dnf install -y nginx
 # import nginx conf from git
-sudo curl $GIT_NGNIX_CONF -o $LOCAL_NGINX_CONF
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/nginx.conf -o /etc/nginx/nginx.conf
 # start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
@@ -60,11 +44,10 @@ sudo firewall-cmd --zone=public --add-port=8080/tcp
 sudo firewall-cmd --zone=public --add-service=http
 sudo firewall-cmd --runtime-to-permanent
 # Import Deamon conf from Github to target machine [ROOT]
-sudo -i
-curl $GIT_DEAMON_CONF -o $LOCAL_DEAMON_CONF
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/todoapp.service -o /etc/systemd/system/todoapp.service
 # Reload and start todoapp Deamon
-systemctl daemon-reload
-systemctl enable todoapp
-systemctl start todoapp
+sudo systemctl daemon-reload
+sudo systemctl enable todoapp
+sudo systemctl start todoapp
 # Adjust todoapp home folder permission
-chmod a+rx /home/todoapp/
+sudo chmod a+rx /home/todoapp/
