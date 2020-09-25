@@ -12,7 +12,7 @@ ssh todoapp
 bash ./app_setup
 ```
 3. Setup port forwarding on your VM: 
-* Host port - use your favorite port
+* Host port - use your favour port
 * Guest Port - **80**
 4. Open your web brower and navigate to below url:
 ```
