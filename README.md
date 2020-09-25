@@ -7,9 +7,9 @@
 ```
 ssh todoapp
 ```
-2. Download the **app_setup.sh** file and run it on your WSL terminal (no need to download files in the setup folder)
+2. Download the **app_setup.sh** file only and run it on your WSL terminal (no need to download files in the setup folder)
 ```
-bash ./app_setup
+bash ./app_setup.sh
 ```
 3. Setup port forwarding on your VM: 
 * Host port - use your favour port
