@@ -1,4 +1,4 @@
-# ACIT4640 - Assignment 1
+# ACIT4640 - Automated Setup
 ## JiaJun Cai
 ## A00980088
 ### [How to use]
