@@ -1,7 +1,0 @@
-#!/bin/sh
-
-UZER=todoapp
-
-sudo -u "$UZER" /home/todoapp/CIT4640-todo-app
-
-exit 0
