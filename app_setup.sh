@@ -1,5 +1,5 @@
 #!/bin/bash -x
-# download script from the cloud and create script file
+# download script from the cloud
 ssh todoapp sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/install.sh -o /home/admin/install.sh
 # Run locally
 ssh todoapp sudo chmod 777 /home/admin/install.sh
