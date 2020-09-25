@@ -8,7 +8,7 @@ sudo usermod -aG wheel todoapp
 # install Mongodb
 sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/module02/setup/mongodb-org-4.4.repo -o /etc/yum.repos.d/mongodb-org-4.4.repo
 #sudo dnf search mongodb
-sudo dnf install -y -b mongodb-org
+sudo dnf install -y https://repo.mongodb.org/yum/redhat/8/mongodb-org/4.4/x86_64/RPMS/mongodb-org-server-4.4.1-1.el8.x86_64.rpm
 # start mongodb
 sudo systemctl enable mongod
 sudo systemctl start mongod
