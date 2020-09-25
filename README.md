@@ -11,4 +11,4 @@ ssh todoapp
 ```
 bash ./app_setup
 ```
-![Screenshot](/setup/screenshot.png)
+![Screenshot](/setup/screenshot.PNG)
