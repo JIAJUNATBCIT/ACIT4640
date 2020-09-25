@@ -14,7 +14,7 @@ bash ./app_setup.sh
 3. Setup port forwarding on your VM: 
 * Host port - use your favour port
 * Guest Port - **80**
-4. Open your web brower and navigate to below url:
+4. Open your web browser and navigate to below url:
 ```
 http://localhost:[Host port]/
 ```
