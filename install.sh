@@ -7,14 +7,6 @@ sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 sudo usermod -aG wheel todoapp
 # install Mongodb
 sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/mongodb-org-4.4.repo -o /etc/yum.repos.d/mongodb-org-4.4.repo
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-cli-1.5.0.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-database-tools-100.1.1.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-org-4.4.1-1.el8.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-org-database-tools-extra-4.4.1-1.el8.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-org-mongos-4.4.1-1.el8.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-org-server-4.4.1-1.el8.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-org-shell-4.4.1-1.el8.x86_64.rpm
-#sudo dnf install -y https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/4.4/x86_64/RPMS/mongodb-org-tools-4.4.1-1.el8.x86_64.rpm
 #sudo dnf search mongodb
 sudo dnf install -y -b mongodb-org
 # start mongodb
