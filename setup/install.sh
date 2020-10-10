@@ -2,12 +2,18 @@
 USER="todoapp"
 DIR="/home/todoapp/ACIT4640-todo-app"
 NGINX_CONF="/etc/nginx/nginx.conf"
+echo "Install todoapp...started"
 #add todoapp user
 sudo useradd todoapp
 #set password to todoapp user
 sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
-#Add todoapp user to sudoers group
-sudo usermod -aG wheel todoapp
+echo "Created todoapp user"
+# If the project folder already exists, DELETE it
+if [ -d "$DIR" ]; then sudo rm -Rf $DIR; fi
+#Install Git
+sudo dnf install -y -b git
+# clone project from git to current folder
+sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git /home/todoapp/
 # install Mongodb
 cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
@@ -25,16 +31,7 @@ sudo systemctl enable mongod
 sudo systemctl start mongod
 # create mongodb instance
 mongo --eval "db.createCollection('acit4640')"
-# navigate to the todoapp home
-cd /home/todoapp/
-# If the project folder already exists, DELETE it
-if [ -d "./ACIT4640-todo-app" ]; then sudo rm -Rf "./ACIT4640-todo-app"; fi
-#Install Git
-sudo dnf install -y -b git
-# clone project from git to current folder
-sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git
-# navigate to the project folder
-cd ./ACIT4640-todo-app
+echo "Mongo DB installed and started.."
 # Reconfig MongoDB path
 sudo su - $USER -c "rm -rf $DIR/config/database.js"
 sudo su - $USER -c "cat <<EOF > database.js 
@@ -46,10 +43,11 @@ sudo su - $USER -c "mv database.js $DIR/config/database.js"
 # install project packages
 sudo dnf install -y -b nodejs
 sudo npm install
+echo "nodejs installed"
 # install nginx
 sudo dnf install -y nginx
 # import nginx conf from git
-sudo sed -i 's:/usr/share/nginx/html;:$DIR/public;:' $NGINX_CONF
+sudo sed -i 's:/usr/share/nginx/html;:/home/todoapp/ACIT4640-todo-app/public;:' $NGINX_CONF
 if grep -qF "location /api/todos" $NGINX_CONF; then
 	echo "Nginx file already configured!"
 else
@@ -58,6 +56,7 @@ fi
 # start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
+echo "nginx installed and started"
 # disable SE Linux
 sudo setenforce 0
 sudo sed -r -i 's/SELINUX=(enforcing|disabled)/SELINUX=permissive/' /etc/selinux/config
@@ -66,7 +65,6 @@ sudo sed -r -i 's/SELINUX=(enforcing|disabled)/SELINUX=permissive/' /etc/selinux
 #sudo firewall-cmd --zone=public --add-service=http
 #sudo firewall-cmd --runtime-to-permanent
 # Adjust todoapp home folder permission
-cd ~
 sudo chmod a+rx /home/todoapp/
 sudo chown todoapp:todoapp $DIR
 # Import Deamon conf from Github to target machine [ROOT]
@@ -87,7 +85,9 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 sudo mv todoapp.service /etc/systemd/system/todoapp.service
+echo "Config todoapp as a daemon"
 # Reload and start todoapp Deamon
 sudo systemctl daemon-reload
 sudo systemctl enable todoapp
 sudo systemctl start todoapp
+echo "Done"
