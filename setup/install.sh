@@ -56,7 +56,7 @@ sudo sed -i 's:/usr/share/nginx/html;:/home/todoapp/ACIT4640-todo-app/public;:' 
 if grep -qF "location /api/todos" $NGINX_CONF; then
 	echo "Nginx file already configured!"
 else
-	sudo sed -i '49 i \ \ \ \ \ \ \ \ location /api/todos{proxy_pass http://localhost:8080;}' $NGINX_CONF
+	sudo sed -i '49 i \ \ \ \ \ \ \ \ location /api/todos {proxy_pass http://localhost:8080;}' $NGINX_CONF
 fi
 # start nginx
 sudo systemctl enable nginx
