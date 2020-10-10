@@ -10,6 +10,7 @@ sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 #Add todoapp user to sudoers group
 sudo usermod -aG wheel todoapp
 # install Mongodb
+cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/4.4/x86_64/
