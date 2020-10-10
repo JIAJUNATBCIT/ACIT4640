@@ -51,7 +51,7 @@ echo "nodejs installed"
 # install nginx
 sudo dnf install -y nginx
 # config nginx
-sudo sed -i 's:/usr/share/nginx/html;:/home/todoapp/app/public;:' $NGINX_CONF
+sudo sed -i 's:/usr/share/nginx/html;:/home/todoapp/ACIT4640-todo-app/public;:' $NGINX_CONF
 if grep -qF "location /api/todos" $NGINX_CONF; then
 	echo "Nginx file already configured!"
 else
