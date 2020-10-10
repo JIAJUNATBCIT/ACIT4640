@@ -1,4 +1,6 @@
 #!/bin/bash -x
+sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8
+sudo dnf update
 #add todoapp user
 sudo useradd todoapp
 #set password to todoapp user
@@ -30,7 +32,6 @@ sudo sh -c 'echo "module.exports = {localUrl: \"mongodb://localhost/acit4640\"};
 sudo dnf install -y -b nodejs
 sudo npm install
 # install nginx
-sudo dnf install -y epel-release
 sudo dnf install -y nginx
 # import nginx conf from git
 sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/nginx.conf -o /etc/nginx/nginx.conf
