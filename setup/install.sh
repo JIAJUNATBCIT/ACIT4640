@@ -42,7 +42,7 @@ module.exports = {
     localUrl: 'mongodb://localhost/ACIT4640'
 }; 
 EOF"
-sudo su - $USER -c "mv database.js /home/todoapp/ACIT4640-todo-app/config/database.js"
+sudo su - $USER -c "mv database.js $DIR/config/database.js"
 # install project packages
 sudo dnf install -y -b nodejs
 sudo npm install
