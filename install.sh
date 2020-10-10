@@ -68,23 +68,7 @@ cd ~
 sudo chmod a+rx /home/todoapp/
 sudo chown todoapp:todoapp /home/todoapp/ACIT4640-todo-app/
 # Config todoapp as a daemon
-cat <<EOF > todoapp.service
-[Unit]
-Description=Todo app, ACIT4640
-After=network.target
-Requires=mongod.service
-[Service]
-Environment=NODE_PORT=8080
-WorkingDirectory=$DIR
-Type=simple
-User=$USER
-ExecStartPre=/bin/sleep 5
-ExecStart=/usr/bin/node $DIR/server.js
-Restart=always
-[Install]
-WantedBy=multi-user.target
-EOF
-sudo mv todoapp.service /etc/systemd/system/todoapp.service
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/todoapp.service -o /etc/systemd/system/todoapp.service
 # Reload and start todoapp Deamon
 sudo systemctl daemon-reload
 sudo systemctl enable todoapp
