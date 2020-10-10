@@ -1,4 +1,5 @@
 #!/bin/bash -x
+sudo dnf update
 #add todoapp user
 sudo useradd todoapp
 #set password to todoapp user
@@ -6,36 +7,33 @@ sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 #Add todoapp user to sudoers group
 sudo usermod -aG wheel todoapp
 # install Mongodb
-sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/module02/setup/mongodb-org-4.4.repo -o /etc/yum.repos.d/mongodb-org-4.4.repo
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/mongodb-org-4.4.repo -o /etc/yum.repos.d/mongodb-org-4.4.repo
 #sudo dnf search mongodb
-sudo dnf install -y https://repo.mongodb.org/yum/redhat/8/mongodb-org/4.4/x86_64/RPMS/mongodb-org-server-4.4.1-1.el8.x86_64.rpm
+sudo dnf install -y -b mongodb-org
 # start mongodb
 sudo systemctl enable mongod
 sudo systemctl start mongod
 # create mongodb instance
 mongo --eval "db.createCollection('acit4640')"
-# Reconfig MongoDB path
-sudo sh -c 'echo "module.exports = {localUrl: \"mongodb://localhost/acit4640\"};" > ./config/database.js'
+# navigate to the todoapp home
+cd /home/todoapp/
+# If the project folder already exists, DELETE it
+if [ -d "./ACIT4640-todo-app" ]; then sudo rm -Rf "./ACIT4640-todo-app"; fi
 #Install Git
 sudo dnf install -y -b git
-# If the project folder already exists, DELETE it
-if [ -d "ACIT4640-todo-app" ]; then sudo rm -Rf ACIT4640-todo-app; fi
-# clone project from git
+# clone project from git to current folder
 sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git
-# If the project folder already exists, DELETE it
-if [ -d "/home/todoapp/ACIT4640-todo-app" ]; then sudo rm -Rf /home/todoapp/ACIT4640-todo-app; fi
-# copy project to todoapp user's home folder
-sudo cp -r ACIT4640-todo-app/ /home/todoapp/
 # navigate to the project folder
-cd /home/todoapp/ACIT4640-todo-app/
+cd ./ACIT4640-todo-app
+# Reconfig MongoDB path
+sudo sh -c 'echo "module.exports = {localUrl: \"mongodb://localhost/acit4640\"};" > ./config/database.js'
 # install project packages
 sudo dnf install -y -b nodejs
 sudo npm install
 # install nginx
-sudo dnf install -y epel-release
 sudo dnf install -y nginx
 # import nginx conf from git
-sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/module02/setup/nginx.conf -o /etc/nginx/nginx.conf
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/nginx.conf -o /etc/nginx/nginx.conf
 # start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
@@ -51,7 +49,7 @@ cd ~
 sudo chmod a+rx /home/todoapp/
 sudo chown todoapp:todoapp /home/todoapp/ACIT4640-todo-app/
 # Import Deamon conf from Github to target machine [ROOT]
-sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/module02/setup/todoapp.service -o /etc/systemd/system/todoapp.service
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/todoapp.service -o /etc/systemd/system/todoapp.service
 # Reload and start todoapp Deamon
 sudo systemctl daemon-reload
 sudo systemctl enable todoapp
