@@ -1,6 +1,6 @@
 #!/bin/bash -x
 USER="todoapp"
-DIR="/home/todoapp/app"
+DIR="/home/todoapp/ACIT4640-todo-app"
 NGINX_CONF="/etc/nginx/nginx.conf"
 #add todoapp user
 sudo useradd todoapp
