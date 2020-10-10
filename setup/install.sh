@@ -83,6 +83,7 @@ WantedBy=multi-user.target
 EOF
 sudo mv todoapp.service /etc/systemd/system/todoapp.service
 echo "Config todoapp as a daemon"
+sudo chown todoapp:todoapp $DIR
 # Reload and start todoapp Deamon
 sudo systemctl daemon-reload
 sudo systemctl enable todoapp
