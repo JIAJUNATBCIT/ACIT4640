@@ -15,8 +15,7 @@ if [ -d "$DIR" ]; then sudo rm -Rf $DIR; fi
 #Install Git
 sudo dnf install -y -b git
 # clone project from git to current folder
-sudo git clone https://github.com/timoguic/ACIT4640-todo-app.git
-sudo cp -r /ACIT4640-todo-app /home/todoapp/
+sudo su - $USER -c "git clone https://github.com/timoguic/ACIT4640-todo-app.git"
 # install Mongodb
 cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
