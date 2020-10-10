@@ -28,7 +28,7 @@ gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.4.asc
 EOF
-sudo mv mongodb-org-4.4.repo /etc/yum.repos.d/mongodb-org-4.4.repo
+sudo mv mongodb-org-4.4.repo /etc/yum.repos.d/
 #sudo dnf search mongodb
 sudo dnf install -y -b mongodb-org
 # start mongodb
