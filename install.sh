@@ -1,5 +1,4 @@
 #!/bin/bash -x
-sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8
 sudo dnf update
 #add todoapp user
 sudo useradd todoapp
