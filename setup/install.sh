@@ -49,7 +49,7 @@ echo "nodejs installed"
 # install nginx
 sudo dnf install -y nginx
 # import nginx conf from git
-sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/nginx.conf -o /etc/nginx/nginx.conf
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/module02/setup/nginx.conf -o /etc/nginx/nginx.conf
 # start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
