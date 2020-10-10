@@ -40,9 +40,9 @@ sudo systemctl start nginx
 sudo setenforce 0
 sudo sed -r -i 's/SELINUX=(enforcing|disabled)/SELINUX=permissive/' /etc/selinux/config
 # config firewall
-sudo firewall-cmd --zone=public --add-port=8080/tcp
-sudo firewall-cmd --zone=public --add-service=http
-sudo firewall-cmd --runtime-to-permanent
+#sudo firewall-cmd --zone=public --add-port=8080/tcp
+#sudo firewall-cmd --zone=public --add-service=http
+#sudo firewall-cmd --runtime-to-permanent
 # Adjust todoapp home folder permission
 cd ~
 sudo chmod a+rx /home/todoapp/
