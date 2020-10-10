@@ -10,14 +10,15 @@ sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 #Add todoapp user to sudoers group
 sudo usermod -aG wheel todoapp
 echo "Created todoapp user"
+# Adjust todoapp home folder permission
+sudo chmod a+rx /home/todoapp
 # If the project folder already exists, DELETE it
 if [ -d "$DIR" ]; then sudo rm -Rf $DIR; fi
 #Install Git
 sudo dnf install -y -b git
 # clone project from git to current folder
-sudo su - $USER -c "git clone https://github.com/timoguic/ACIT4640-todo-app.git"
-# Adjust todoapp home folder permission
-sudo su - $USER -c 'chmod a+rx /home/todoapp'
+cd /home/todoapp/
+git clone https://github.com/timoguic/ACIT4640-todo-app.git
 # install Mongodb
 cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
@@ -37,13 +38,13 @@ sudo systemctl start mongod
 mongo --eval "db.createCollection('acit4640')"
 echo "Mongo DB installed and started.."
 # Reconfig MongoDB path
-sudo su - $USER -c "rm -rf $DIR/config/database.js"
-sudo su - $USER -c "cat <<EOF > database.js 
+sudo rm -rf $DIR/config/database.js
+sudo cat <<EOF > database.js 
 module.exports = {
     localUrl: 'mongodb://localhost/ACIT4640'
 }; 
-EOF"
-sudo su - $USER -c "mv database.js $DIR/config/"
+EOF
+sudo mv database.js $DIR/config/
 # install project packages
 sudo dnf install -y -b nodejs
 sudo npm install
