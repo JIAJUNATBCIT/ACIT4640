@@ -16,6 +16,8 @@ if [ -d "$DIR" ]; then sudo rm -Rf $DIR; fi
 sudo dnf install -y -b git
 # clone project from git to current folder
 sudo su - $USER -c "git clone https://github.com/timoguic/ACIT4640-todo-app.git"
+# Adjust todoapp home folder permission
+sudo su - $USER -c 'chmod a+rx /home/todoapp'
 # install Mongodb
 cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
@@ -48,8 +50,13 @@ sudo npm install
 echo "nodejs installed"
 # install nginx
 sudo dnf install -y nginx
-# import nginx conf from git
-sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/module02/setup/nginx.conf -o /etc/nginx/nginx.conf
+# config nginx
+sudo sed -i 's:/usr/share/nginx/html;:/home/todoapp/app/public;:' $NGINX_CONF
+if grep -qF "location /api/todos" $NGINX_CONF; then
+	echo "Nginx file already configured!"
+else
+	sudo sed -i '49 i \ \ \ \ \ \ \ \ location /api/todos{proxy_pass http://localhost:8080;}' $NGINX_CONF
+fi
 # start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
@@ -57,14 +64,7 @@ echo "nginx installed and started"
 # disable SE Linux
 sudo setenforce 0
 sudo sed -r -i 's/SELINUX=(enforcing|disabled)/SELINUX=permissive/' /etc/selinux/config
-# config firewall
-#sudo firewall-cmd --zone=public --add-port=8080/tcp
-#sudo firewall-cmd --zone=public --add-service=http
-#sudo firewall-cmd --runtime-to-permanent
-# Adjust todoapp home folder permission
-sudo chmod a+rx /home/todoapp/
-sudo chown todoapp:todoapp $DIR
-# Import Deamon conf from Github to target machine [ROOT]
+# Config todoapp as a daemon
 cat <<EOF > todoapp.service
 [Unit]
 Description=Todo app, ACIT4640
