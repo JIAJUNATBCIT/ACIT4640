@@ -49,12 +49,7 @@ echo "nodejs installed"
 # install nginx
 sudo dnf install -y nginx
 # import nginx conf from git
-sudo sed -i 's:/usr/share/nginx/html;:/home/todoapp/ACIT4640-todo-app/public;:' $NGINX_CONF
-if grep -qF "location /api/todos" $NGINX_CONF; then
-	echo "Nginx file already configured!"
-else
-	sudo sed -i '49 i \ \ \ \ \ \ \ \ location /api/todos{\n \ \ \ \ \ \ \ \ \ \ \ \ proxy_pass http://localhost:8080;\n \ \ \ \ \ \ \ \}' $NGINX_CONF
-fi
+sudo curl https://raw.githubusercontent.com/JIAJUNATBCIT/ACIT4640/master/nginx.conf -o /etc/nginx/nginx.conf
 # start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
