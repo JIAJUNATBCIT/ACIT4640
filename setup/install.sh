@@ -1,5 +1,4 @@
 #!/bin/bash -x
-sudo dnf update
 #add todoapp user
 sudo useradd todoapp
 #set password to todoapp user
