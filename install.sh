@@ -2,13 +2,12 @@
 USER="todoapp"
 DIR="/home/todoapp/ACIT4640-todo-app"
 NGINX_CONF="/etc/nginx/nginx.conf"
-#sudo dnf update
 #add todoapp user
 sudo useradd todoapp
 #set password to todoapp user
 sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
 #Add todoapp user to sudoers group
-sudo usermod -aG wheel todoapp
+#sudo usermod -aG wheel todoapp
 # install Mongodb
 cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
