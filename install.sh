@@ -2,12 +2,25 @@
 USER="todoapp"
 DIR="/home/todoapp/ACIT4640-todo-app"
 NGINX_CONF="/etc/nginx/nginx.conf"
+ADMIN_SSH="/home/admin/.ssh"
 #add todoapp user
 sudo useradd todoapp
 #set password to todoapp user
 sudo sh -c 'echo P@ssw0rd | passwd todoapp --stdin'
-#Add todoapp user to sudoers group
-#sudo usermod -aG wheel todoapp
+#create admin user
+sudo useradd admin
+#set password to admin user
+sudo sh -c 'echo P@ssw0rd | passwd admin --stdin'
+#Add admin user to sudoers group
+sudo usermod -aG wheel admin
+#create .ssh folder
+sudo mkdir /home/admin/.ssh
+sudo chmod 700 $ADMIN_SSH
+#Create authorized_keys file
+sudo curl https:student:BCIT2020//acit4640.y.vu/docs/module02/resources/acit_admin_id_rsa.pub -o $ADMIN_SSH/authorized_keys
+sudo chmod 600 $ADMIN_SSH/authorized_keys
+sudo chown admin:admin $ADMIN_SSH/authorized_keys
+sudo chown admin:admin $ADMIN_SSH
 # install Mongodb
 cat <<EOF > mongodb-org-4.4.repo
 [mongodb-org-4.4]
